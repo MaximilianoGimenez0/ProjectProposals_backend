@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Infrastructure.Persistence.Entities;
+
 namespace Infrastructure.Persistence.Configurations
 {
     public class AreaConfiguration : IEntityTypeConfiguration<Area>
@@ -18,8 +14,7 @@ namespace Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.Name)
                 .IsRequired()
-                .HasMaxLength(25)
-                .HasColumnType("varchar(25)");
+                .HasMaxLength(25);
         }
     }
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -31,7 +26,6 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasOne(p => p.ApprovalRuleApproverRole)
                 .WithMany(c => c.ApprovalRules)
                 .HasForeignKey(p => p.ApproverRoleId)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.ApprovalRuleType)

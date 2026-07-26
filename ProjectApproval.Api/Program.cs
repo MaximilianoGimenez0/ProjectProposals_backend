@@ -67,7 +67,7 @@ var connectionString = builder.Configuration.GetConnectionString("LocalProjectCo
 
 //con
 builder.Services.AddDbContext<ProjectApprovalDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 #region
 

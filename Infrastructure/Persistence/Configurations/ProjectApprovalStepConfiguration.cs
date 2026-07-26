@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -21,17 +16,14 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(p => p.DecisionDate)
-                .IsRequired(false)
-                .HasColumnType("datetime2");
+                .IsRequired(false);
 
             builder.Property(p => p.Observations)
-                .IsRequired(false)
-                .HasColumnType("varchar(max)");
+                .IsRequired(false);
 
             builder.HasOne(p => p.StepProjectProposal)
                 .WithMany(c => c.ProjectApprovalSteps)
                 .HasForeignKey(p => p.ProjectProposalId)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(p => p.StepUser)
@@ -43,13 +35,11 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasOne(p => p.StepApproverRole)
                 .WithMany(c => c.ProjectApprovalSteps)
                 .HasForeignKey(p => p.ApproverRoleId)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(p => p.StepApprovalStatus)
                 .WithMany(c => c.ProjectApprovalSteps)
                 .HasForeignKey(p => p.Status)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

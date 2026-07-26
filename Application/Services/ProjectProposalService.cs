@@ -272,7 +272,7 @@ namespace Application.Services
                 Description = project.Description,
                 EstimatedAmount = project.EstimatedAmount.Value,
                 EstimatedDuration = project.EstimatedDuration.Value,
-                CreateAt = DateTime.Now,
+                CreateAt = DateTime.UtcNow,
                 Status = 1,
                 Area = project.Area.Value,
                 Type = project.Type.Value,
