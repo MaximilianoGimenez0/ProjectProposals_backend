@@ -12,7 +12,7 @@ namespace Application.Dtos.Responses
         public int stepOrder { get; set; }
         public DateTime? decisionDate { get; set; }
         public string? observations { get; set; }
-        public UsersResponse approverUser { get; set; }
+        public UsersResponse? approverUser { get; set; }
         public GenericResponse approverRole { get; set; }
         public GenericResponse status { get; set; }
     }
