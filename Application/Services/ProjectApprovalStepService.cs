@@ -66,7 +66,7 @@ namespace Application.Services
 
             foreach (var step in steps)
             {
-                if (step.Status == 1)
+                if (step.Status == 1 || step.Status == 4)
                 {
                     var temp = new ProjectApprovalStepDto()
                     {

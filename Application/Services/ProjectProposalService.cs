@@ -501,7 +501,34 @@ namespace Application.Services
         }
 
 
+        public async Task<List<ProjectResponse>> getRoleApprovals(int role) {
 
+            var nextStepsForRole = new List<ProjectApprovalStepDto>();
+
+            var nextSteps = await _projectApprovalStepService.ViewPendingAll();
+
+            var projects = _projectProposalGetAllHandler.Handle(new ProjectProposalGetAllQry());
+
+            foreach (var step in nextSteps) {
+                if (step.ApproverRoleId.Value == role) {
+                    nextStepsForRole.Add(step);
+                }
+                
+            }
+
+            var results = new List<ProjectResponse>();
+
+            foreach (var step in nextStepsForRole) {
+                
+                var temp = await this.GetCompleteProjectGetById ( step.ProjectProposalId.Value );
+
+                if (temp != null) { results.Add(temp); }
+                
+            }
+                    
+
+            return results;
+        }
 
 
 

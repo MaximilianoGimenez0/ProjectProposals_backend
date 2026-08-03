@@ -205,7 +205,40 @@ namespace ProjectApproval.Api.Controllers
 
         }
 
-     
+
+        [HttpGet("rolepending/{role}")]
+        [ProducesResponseType(typeof(ProjectResponse), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponse), 400)]
+        [ProducesResponseType(typeof(ApiErrorResponse), 404)]
+        public async Task<IActionResult> getRoleApprovals(int role)
+        {
+            if (role > 3 || role < 0)
+            {
+                return BadRequest(new ApiErrorResponse { message = "El rol no puede ser menor a 0 ni mayor a 3." });
+            }
+
+
+            if (!ModelState.IsValid)
+            {
+                var firstError = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .FirstOrDefault()?.ErrorMessage ?? "Error de validación.";
+
+                return BadRequest(new ApiErrorResponse
+                {
+                    message = firstError
+                });
+            }
+
+            try
+            {
+                var result = await _projectProposalService.getRoleApprovals(role);
+                return Ok(result);
+            }
+            catch (NotFoundException ex) { return NotFound(new ApiErrorResponse() { message = ex.Message }); }
+            catch (BadRequestException ex) { return BadRequest(new ApiErrorResponse() { message = ex.Message }); }
+        }
+
 
     }
 }

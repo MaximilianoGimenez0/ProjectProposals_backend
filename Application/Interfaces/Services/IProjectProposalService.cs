@@ -18,6 +18,7 @@ namespace Application.Interfaces.Services
         Task<ProjectResponse> UpdateProject(Guid id, ProjectUpdateRequest update);
         Task<List<ProjectShortResponse>> GetFiltered(string? title,int? status,int? createBy,int? approverRole);
         Task<ProjectResponse> UpdateProjectStep(Guid id, updateApprovalStatusDto dto);
+        Task<List<ProjectResponse>> getRoleApprovals(int role);
 
     }
 }
