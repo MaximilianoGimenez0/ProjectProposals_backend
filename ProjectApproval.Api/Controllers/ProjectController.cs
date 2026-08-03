@@ -212,9 +212,9 @@ namespace ProjectApproval.Api.Controllers
         [ProducesResponseType(typeof(ApiErrorResponse), 404)]
         public async Task<IActionResult> getRoleApprovals(int role)
         {
-            if (role > 3 || role < 0)
+            if (role > 999 || role < 0)
             {
-                return BadRequest(new ApiErrorResponse { message = "El rol no puede ser menor a 0 ni mayor a 3." });
+                return BadRequest(new ApiErrorResponse { message = "El rol no puede ser menor a 0 ni mayor a 999." });
             }
 
 
@@ -232,7 +232,7 @@ namespace ProjectApproval.Api.Controllers
 
             try
             {
-                var result = await _projectProposalService.getRoleApprovals(role);
+                var result = await _projectProposalService.GetRoleApprovals(role);
                 return Ok(result);
             }
             catch (NotFoundException ex) { return NotFound(new ApiErrorResponse() { message = ex.Message }); }

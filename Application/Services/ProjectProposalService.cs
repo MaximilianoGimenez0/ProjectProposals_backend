@@ -465,7 +465,7 @@ namespace Application.Services
             if (dbStep == null) { throw new BadRequestException("El paso no existe"); }
 
             dbStep.Status = dto.newStatus.Value;
-            dbStep.DecisionDate = DateTime.Now;
+            dbStep.DecisionDate = DateTime.UtcNow;
             dbStep.ApproverUserId = dto.user.Value;
             dbStep.Observations = dto.observation;
             
@@ -501,31 +501,31 @@ namespace Application.Services
         }
 
 
-        public async Task<List<ProjectResponse>> getRoleApprovals(int role) {
-
-            var nextStepsForRole = new List<ProjectApprovalStepDto>();
-
+        public async Task<List<ProjectResponse>> GetRoleApprovals(int role)
+        {
             var nextSteps = await _projectApprovalStepService.ViewPendingAll();
-
-            var projects = _projectProposalGetAllHandler.Handle(new ProjectProposalGetAllQry());
-
-            foreach (var step in nextSteps) {
-                if (step.ApproverRoleId.Value == role) {
-                    nextStepsForRole.Add(step);
-                }
-                
-            }
 
             var results = new List<ProjectResponse>();
 
-            foreach (var step in nextStepsForRole) {
-                
-                var temp = await this.GetCompleteProjectGetById ( step.ProjectProposalId.Value );
+            foreach (var step in nextSteps)
+            {
+                if (step.ApproverRoleId != role)
+                {
+                    continue;
+                }
 
-                if (temp != null) { results.Add(temp); }
-                
+                if (!step.ProjectProposalId.HasValue)
+                {
+                    continue;
+                }
+
+                var project = await GetCompleteProjectGetById(step.ProjectProposalId.Value);
+
+                if (project != null)
+                {
+                    results.Add(project);
+                }
             }
-                    
 
             return results;
         }
